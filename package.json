@@ -1,0 +1,30 @@
+{
+  "name": "welink-cli",
+  "version": "0.1.0",
+  "description": "Simple CLI for scaffolding welink projects",
+  "main": "index.js",
+  "bin": {
+    "welink": "bin/welink"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jd-smart-fe/welink-cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jd-smart-fe/welink-cli/issues"
+  },
+  "homepage": "https://github.com/jd-smart-fe/welink-cli#readme",
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "commander": "^2.11.0",
+    "inquirer": "^3.3.0",
+    "node-svn-ultimate": "^1.1.0",
+    "ora": "^1.3.0"
+  }
+}

@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+
+program.version(require('../package').version)
+  .usage('<command> [options]')
+  .command('init', 'generate a new project from a template')
+  .command('list', 'list available official templates')
+
+process.on('exit', function () {
+  console.log();
+});
+
+program.parse(process.argv);
+
+
+

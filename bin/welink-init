@@ -1,0 +1,90 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var fs = require('fs');
+var exists = require('fs').existsSync
+var path = require('path');
+var ora = require('ora');
+var chalk = require('chalk');
+var inquirer = require('inquirer');
+
+var download = require('../libs/download.js');
+
+// welink git template repository
+
+// https://github.com/jd-smart-fe/welink-template
+// debug
+var OFFICIAL_REPO = 'https://github.com/jd-smart-fe/welink-devtool.git/trunk/';
+
+program
+  .usage('<template-name> [project-name](optional)')
+
+program.on('--help', function () {
+  console.log('  Examples:')
+  console.log()
+  console.log(chalk.gray('    # create a welink HTML5 project with an official template'))
+  console.log('    $ welink init plugin my-project')
+  console.log()
+})
+
+// help
+function help () {
+  program.parse(process.argv)
+  if (program.args.length < 1) return program.help()
+}
+help()
+
+// parse arguments
+var template = program.args[0];
+var target = program.args[1];
+if(!target) {
+  target = '.';
+}
+var inplace = target == '.';
+var local = path.resolve(target);
+
+console.log();
+process.on('exit', function () {
+  console.log()
+})
+
+if (exists(local)) {
+  inquirer.prompt([{
+    type: 'confirm',
+    message: inplace ? 'Generate project in current directory?'
+      : 'Target directory exists. Continue?',
+    name: 'ok'
+  }]).then(function (answers) {
+    if (answers.ok) {
+      run()
+    }
+  });
+} else {
+  run()
+}
+
+function run () {
+
+  console.log();
+  console.log('The Template: ' + template);
+  console.log('Target Directory: ' + local);
+  console.log();
+  create(template);
+}
+
+function create (template) {
+
+  var remote = OFFICIAL_REPO + template;
+  var spinner = ora('Downloading template');
+  spinner.start();
+
+  download(remote, local, {force: true}, function(err) {
+
+    spinner.stop();
+    if (err) {
+      logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim())
+    }
+
+    console.log('Everything is ready, Let\'s fun together. ');
+  });
+}
