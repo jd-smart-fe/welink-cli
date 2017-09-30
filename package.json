@@ -2,6 +2,7 @@
   "name": "welink-cli",
   "version": "0.1.0",
   "description": "Simple CLI for scaffolding welink projects",
+  "preferGlobal": true,
   "main": "index.js",
   "bin": {
     "welink": "bin/welink"
