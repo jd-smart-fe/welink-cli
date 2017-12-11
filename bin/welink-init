@@ -8,13 +8,11 @@ var ora = require('ora');
 var chalk = require('chalk');
 var inquirer = require('inquirer');
 
-var download = require('../libs/download.js');
+var generator = require('../libs/generate');
 
 // welink git template repository
-
 // https://github.com/jd-smart-fe/welink-template
-// debug
-var OFFICIAL_REPO = 'https://github.com/jd-smart-fe/welink-devtool.git/trunk/';
+
 
 program
   .usage('<template-name> [project-name](optional)')
@@ -73,18 +71,15 @@ function run () {
 }
 
 function create (template) {
-
-  var remote = OFFICIAL_REPO + template;
   var spinner = ora('Downloading template');
+
   spinner.start();
 
-  download(remote, local, {force: true}, function(err) {
-
+  generator(template, local).then(function () {
     spinner.stop();
-    if (err) {
-      logger.fatal('Failed to download repo ' + template + ': ' + err.message.trim())
-    }
-
-    console.log('Everything is ready, Let\'s fun together. ');
+    console.log('Generate template success!');
+  }).catch(function(e) {
+    spinner.stop();
+    console.log(e);
   });
 }
