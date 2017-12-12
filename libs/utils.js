@@ -6,7 +6,6 @@ exports.isExist = function (path) {
     fs.accessSync(path);
     return true;
   } catch (e) {
-    console.log(e);
     return false;
   }
 }
@@ -16,7 +15,7 @@ exports.mkdir = function (dir) {
   try {
     fs.mkdirSync(dir);
     return true;
-  } catch (error) {
+  } catch (e) {
     return false;
   }
 }
@@ -29,9 +28,6 @@ exports.gitClone = function (repo, target) {
       if (err) {
         console.log(err);
         reject();
-      }
-      if (stderr) {
-        console.log(stderr);
       }
       resolve();
     })

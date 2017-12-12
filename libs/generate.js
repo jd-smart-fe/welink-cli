@@ -21,10 +21,9 @@ var download = function (template, target) {
     }
 
     if (!utils.isExist(TEMPLATE_PATH)) {
-
       // 克隆 template 到本地
       utils.gitClone(REPO, TEMPLATE_PATH)
-        .then(copyTemplate(template, target))
+        .then(() => copyTemplate(template, target))
         .then(() => resolve())
         .catch(e => reject(e));
     } else {
@@ -47,11 +46,11 @@ function copyTemplate(template, target) {
     var templatePath = path.resolve(TEMPLATE_PATH, template);
 
     if (!utils.isExist(templatePath)) {
-      reject('Please pass in the correct template name!');
+      reject(`Please pass in the correct template name!`);
     }
 
     gitPull()
-      .then(fs.copy(path.resolve(TEMPLATE_PATH, template), target))
+      .then(() => fs.copy(path.resolve(TEMPLATE_PATH, template), target))
       .then(() => resolve())
       .catch(e => reject(e))
   });
