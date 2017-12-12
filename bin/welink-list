@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+
+var chalk = require('chalk');
+
+console.log(' ');
+console.log(chalk.gray('    # These are all templates'));
+console.log(' ');
+
+console.log('       airMonitoring-JL3-template')
+console.log('       airPressure-JL3-template')
+console.log('       aircleaner-JL3-template')
+console.log('       airconditioner-JL3-templat')
+console.log('       airpurifier-JL3-template')
+console.log('       alarmbutton-JL3-template')
+console.log('       curtain-JL3-template')
+console.log('       dimmer-JL3-template')
+console.log('       floorHeating-JL3-template')
+console.log('       fridge-template')
+console.log('       inductionLight-JL3-template')
+console.log('       panelSwitch-JL3-template')
+console.log('       smartLock-JL3-template')
+
+
+console.log(' ');
+console.log(chalk.gray('    # Generate the template by command:'));
+console.log(' ');
+console.log('    $ welink init <template-name> [project-name]');

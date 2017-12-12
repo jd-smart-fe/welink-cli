@@ -15,13 +15,13 @@ var generator = require('../libs/generate');
 
 
 program
-  .usage('<template-name> [project-name](optional)')
+  .usage('<template-name> [project-name]')
 
 program.on('--help', function () {
   console.log('  Examples:')
   console.log()
   console.log(chalk.gray('    # create a welink HTML5 project with an official template'))
-  console.log('    $ welink init plugin my-project')
+  console.log('    $ welink init fridge-template')
   console.log()
 })
 
