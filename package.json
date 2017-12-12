@@ -1,6 +1,6 @@
 {
   "name": "welink-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple CLI for scaffolding welink projects",
   "preferGlobal": true,
   "main": "index.js",
@@ -8,8 +8,7 @@
     "welink": "bin/welink"
   },
   "scripts": {
-    "version": "git add -A dist",
-    "postversion": "npm publish && git push --follow-tags && npm run ghpages"
+    "postversion": "npm publish && git push --follow-tags"
   },
   "repository": {
     "type": "git",
