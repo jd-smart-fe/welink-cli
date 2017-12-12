@@ -6,11 +6,17 @@ Simple CLI for scaffolding welink projects
 
 ### 创建项目模板
 
-使用 `init` 命令来创建模板：
+**使用 `init` 命令来创建模板：**
 ```bash
-welink init <模板名称> <本地目标文件夹>
+$ welink init <模板名称> <本地项目名称>
 ```
 
+
+**使用 `list` 命令来查看全部模板：**
+
+```bash
+$ welink list
+```
 目前可以创建下列模板：
 
 - airMonitoring-JL3-template
@@ -28,8 +34,6 @@ welink init <模板名称> <本地目标文件夹>
 - smartLock-JL3-template
 
 
-## TODO
-
-* [ ] 引入 [welink-devtool](https://github.com/jd-smart-fe/welink-devtool/)
+## Support
 
 Thanks for vue-cli project that give us some inspiration.
