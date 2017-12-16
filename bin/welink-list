@@ -1,27 +1,64 @@
 #!/usr/bin/env node
 
 var chalk = require('chalk');
-
-console.log(' ');
-console.log(chalk.gray('    # These are all templates'));
-console.log(' ');
-
-console.log('       airMonitoring-JL3-template')
-console.log('       airPressure-JL3-template')
-console.log('       aircleaner-JL3-template')
-console.log('       airconditioner-JL3-templat')
-console.log('       airpurifier-JL3-template')
-console.log('       alarmbutton-JL3-template')
-console.log('       curtain-JL3-template')
-console.log('       dimmer-JL3-template')
-console.log('       floorHeating-JL3-template')
-console.log('       fridge-template')
-console.log('       inductionLight-JL3-template')
-console.log('       panelSwitch-JL3-template')
-console.log('       smartLock-JL3-template')
+var utils = require('../libs/utils');
+var ora = require('ora');
+var fs = require('fs');
+var { CACHE_DIR, TEMPLATE_PATH, REPO } = require('../config');
 
 
-console.log(' ');
-console.log(chalk.gray('    # Generate the template by command:'));
-console.log(' ');
-console.log('    $ welink init <template-name> [project-name]');
+var spinner = ora('Getting templates list...');
+
+genDir()
+  .then(() => ls())
+  .then(files => {
+    const filterd = files.filter(file => /template$/.test(file));
+    console.log(' ');
+    console.log(chalk.gray('    # Available official templates'));
+    console.log(' ');
+    for (let index = 0; index < filterd.length; index++) {
+      const tpl = filterd[index];
+      console.log(`     ${tpl}`);
+    }
+    console.log(' ');
+    console.log(chalk.gray('    # Generate the template by command:'));
+    console.log(' ');
+    console.log('    $ welink init <template-name> [project-name]');
+  })
+  .catch(e => console.log(e));
+
+
+function genDir() {
+  return new Promise((resolve, reject) => {
+    if (!utils.isExist(CACHE_DIR)) {   // 用户本地是否存在 ~/.welink
+      utils.mkdir(CACHE_DIR);   // 不存在则初始化一个
+    }
+    if (!utils.isExist(TEMPLATE_PATH)) {
+      // 克隆 template 到本地
+      spinner.start();
+      utils.gitClone(REPO, TEMPLATE_PATH)
+        .then(() => {
+          spinner.stop();
+          resolve();
+        })
+        .catch(e => {
+          spinner.stop();
+          reject(e)
+        });
+        return;
+    }
+    resolve();
+  });
+}
+
+
+function ls() {
+  return new Promise((resolve, reject) => {
+    fs.readdir(TEMPLATE_PATH, (err, files) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(files);
+    });
+  });
+}
