@@ -41,7 +41,7 @@ $ welink list
 ```
 $ npm install -g welink-cli             # 全局安装 welink-cli 工具
 $ welink init fridge-template project   # 创建“冰箱控制模板”到本地 project 目录下
-$ cd project      
+$ cd project                            # 进入 project 目录
 $ npm install                           # 安装项目依赖，也使用 yarn 进行安装
 $ npm run dev                           # 在本地运行项目
 ```
