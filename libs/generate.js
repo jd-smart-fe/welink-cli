@@ -3,10 +3,7 @@ var fs = require('fs-extra')
 var os = require('os');
 var exec = require('child_process').exec;
 var utils = require('./utils');
-
-var REPO = 'jd-smart-fe/welink-template';
-var CACHE_DIR = path.resolve(os.homedir(), '.welink');
-var TEMPLATE_PATH = path.resolve(CACHE_DIR, 'template');
+var { REPO, CACHE_DIR, TEMPLATE_PATH} = require('../config');
 
 /**
  *
