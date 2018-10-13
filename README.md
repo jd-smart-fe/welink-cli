@@ -14,7 +14,7 @@ $ npm install -g welink-cli
 
 **使用 `init` 命令来创建模板：**
 ```bash
-$ welink init <模板名称> <本地项目名称>
+$ welink init <本地项目名称>
 ```
 
 
@@ -32,7 +32,7 @@ $ welink list
 
 ```
 $ npm install -g welink-cli             # 全局安装 welink-cli 工具，如果之前安装过了则不需要执行这一步
-$ welink init fridge-template project   # 创建“冰箱控制模板”到本地 project 目录下
+$ welink init project   # 创建“冰箱控制模板”到本地 project 目录下
 $ cd project                            # 进入 project 目录
 $ npm install                           # 安装项目依赖，也使用 yarn 进行安装
 $ npm run dev                           # 在本地运行项目
