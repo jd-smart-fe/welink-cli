@@ -10,12 +10,14 @@ var inquirer = require('inquirer');
 
 var generator = require('../libs/generate');
 
+var utils = require('../libs/utils');
+
 // welink git template repository
 // https://github.com/jd-smart-fe/welink-template
 
 
 program
-  .usage('<template-name> [project-name]')
+  .usage('[project-name]')
 
 program.on('--help', function () {
   console.log('  Examples:')
@@ -24,42 +26,74 @@ program.on('--help', function () {
   console.log('    $ welink init fridge-template')
   console.log()
 })
+.parse(process.argv)
+
+
+
+// // parse arguments
+
+
+async function ask() {
+  const config = await utils.getConfig();
+  const answer = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'template',
+      pageSize: config.templates.length,
+      message: 'Which template you want to create?',
+      choices: formatTemplatesList(config.templates),
+      filter(answer) {
+        return /\S*/.exec(answer)[0];
+      },
+    }
+  ]);
+  return answer;
+}
+
+var local;
+var template;
 
 // help
 function help () {
   program.parse(process.argv)
   if (program.args.length < 1) return program.help()
 }
-help()
 
-// parse arguments
-var template = program.args[0];
-var target = program.args[1];
-if(!target) {
-  target = '.';
-}
-var inplace = target == '.';
-var local = path.resolve(target);
+(async () => {
 
-console.log();
-process.on('exit', function () {
-  console.log()
-})
+  help()
 
-if (exists(local)) {
-  inquirer.prompt([{
-    type: 'confirm',
-    message: inplace ? 'Generate project in current directory?'
-      : 'Target directory exists. Continue?',
-    name: 'ok'
-  }]).then(function (answers) {
-    if (answers.ok) {
-      run()
-    }
-  });
-} else {
-  run()
-}
+  const answer = await ask();
+
+
+  template = answer.template;
+  var target = program.args[0];
+  if(!target) {
+    target = '.';
+  }
+  var inplace = target == '.';
+  local = path.resolve(target);
+
+  console.log();
+  process.on('exit', function () {
+    console.log()
+  })
+
+  if (exists(local)) {
+    inquirer.prompt([{
+      type: 'confirm',
+      message: inplace ? 'Generate project in current directory?'
+        : 'Target directory exists. Continue?',
+      name: 'ok'
+    }]).then(function (answers) {
+      if (answers.ok) {
+        run()
+      }
+    });
+  } else {
+    run()
+  }
+})()
 
 function run () {
 
@@ -82,4 +116,33 @@ function create (template) {
     spinner.stop();
     console.log(e);
   });
+}
+
+/**
+ * 在 template.name 增加 right-pad，为了令右边的描述文字对齐。
+ *
+ * @returns {string[]} 整理完毕的字符串数组
+ */
+function formatTemplatesList(templates) {
+  const newArr = [];
+  let maxLength = 0;
+
+  templates.forEach(item => {
+    if (item.type) {
+      return;
+    }
+    if (item.name.length > maxLength) {
+      maxLength = item.name.length;
+    }
+  });
+
+  templates.forEach(item => {
+    if (item.type) {
+      newArr.push(item);
+    } else {
+      newArr.push(`${item.name.padEnd(maxLength)}    ${item.desc}`);
+    }
+  });
+
+  return newArr;
 }

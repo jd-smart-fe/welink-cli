@@ -23,7 +23,7 @@ genDir()
     console.log(' ');
     console.log(chalk.gray('    # Generate the template by command:'));
     console.log(' ');
-    console.log('    $ welink init <template-name> [project-name]');
+    console.log('    $ welink init [project-name]');
   })
   .catch(e => console.log(e));
 

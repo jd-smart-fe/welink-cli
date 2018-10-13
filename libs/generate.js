@@ -17,6 +17,7 @@ var download = function (template, target) {
       utils.mkdir(CACHE_DIR);   // 不存在则初始化一个
     }
 
+
     if (!utils.isExist(TEMPLATE_PATH)) {
       // 克隆 template 到本地
       utils.gitClone(REPO, TEMPLATE_PATH)
@@ -46,7 +47,7 @@ function copyTemplate(template, target) {
       reject(`Please pass in the correct template name!`);
     }
 
-    gitPull()
+    utils.gitPull()
       .then(() => fs.copy(path.resolve(TEMPLATE_PATH, template), target))
       .then(() => resolve())
       .catch(e => reject(e))
@@ -54,19 +55,7 @@ function copyTemplate(template, target) {
 }
 
 
-function gitPull() {
-  var cmd = `git --git-dir=${path.join(TEMPLATE_PATH, '.git')} --work-tree=${TEMPLATE_PATH} pull`;
 
-  return new Promise((resolve, reject) => {
-    exec(cmd, (err, stdout, stderr) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve();
-    });
-  });
-}
 
 
 module.exports = download;
