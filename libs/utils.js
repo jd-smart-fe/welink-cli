@@ -36,7 +36,7 @@ exports.gitClone = function(repo, target) {
 };
 exports.getConfig = async () => {
   if (!exports.isExist(ASSETS_PATH)) {
-    console.log(ASSETS_ROPE);
+    debug(ASSETS_ROPE);
     await exports.gitClone(ASSETS_ROPE, ASSETS_PATH).catch(e => reject(e));
   }
   // 每次获取都 pull
