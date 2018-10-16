@@ -40,7 +40,7 @@ exports.getConfig = async () => {
     await exports.gitClone(ASSETS_ROPE, ASSETS_PATH).catch(e => reject(e));
   }
   // 每次获取都 pull
-  await exports.gitPull();
+  await exports.gitPull(ASSETS_PATH);
   return require(path.join(ASSETS_PATH, 'config'));
 };
 exports.isExist = filepath => {
@@ -53,11 +53,11 @@ exports.isExist = filepath => {
     return false;
   }
 };
-exports.gitPull = () => {
+exports.gitPull = (pull_path) => {
   var cmd = `git --git-dir=${path.join(
-    ASSETS_PATH,
+    pull_path,
     '.git',
-  )} --work-tree=${ASSETS_PATH} pull`;
+  )} --work-tree=${pull_path} pull`;
 
   return new Promise((resolve, reject) => {
     exec(cmd, (err, stdout, stderr) => {

@@ -47,7 +47,7 @@ function copyTemplate(template, target) {
       reject(`Please pass in the correct template name!`);
     }
 
-    utils.gitPull()
+    utils.gitPull(TEMPLATE_PATH)
       .then(() => fs.copy(path.resolve(TEMPLATE_PATH, template), target))
       .then(() => resolve())
       .catch(e => reject(e))
