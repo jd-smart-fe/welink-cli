@@ -3,7 +3,7 @@ var fs = require('fs-extra')
 var os = require('os');
 var exec = require('child_process').exec;
 var utils = require('./utils');
-var { REPO, CACHE_DIR, TEMPLATE_PATH} = require('../CONFIG');
+var { REPO, CACHE_DIR, TEMPLATE_PATH} = require('../config');
 
 /**
  *
